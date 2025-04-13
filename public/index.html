@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <title>Guia Bíblico JW</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      padding: 30px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #resposta {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border-left: 4px solid #2e6da4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guia Bíblico JW</h1>
+  <input type="text" id="pergunta" placeholder="Faz a tua pergunta bíblica..." size="50">
+  <button onclick="pesquisar()">Pesquisar</button>
+
+  <div id="resposta">Aguardando pergunta bíblica...</div>
+
+  <script>
+    async function pesquisar() {
+      const pergunta = document.getElementById('pergunta').value;
+
+      const resposta = await fetch('/perguntar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pergunta })
+      });
+
+      const dados = await resposta.json();
+      document.getElementById('resposta').innerText = dados.resposta;
+    }
+  </script>
+</body>
+</html>
